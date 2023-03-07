@@ -58,9 +58,12 @@ public class CoeficienteCorrelacaoLinear {
                     sumy2 += y2.get(i);
                     sumxy += xy.get(i);
                 }
-
+                
                 double angularCoefficient = calculateAngularCoefficient(length, sumxy, sumxi, sumyi, sumx2);
                 double intercept = calculateIntercept(sumyi, angularCoefficient, sumxi, length);
+                
+                calculateyM(angularCoefficient, intercept, yi, xi);      
+                
                 calculateR(length, sumxy, sumxi, sumyi, sumx2, sumy2);
                 System.out.println(showFormula(angularCoefficient, intercept));
                 System.out.println();
@@ -111,4 +114,26 @@ public class CoeficienteCorrelacaoLinear {
         System.out.println(result);
     }
 
+    private static void calculateyM(double angularCoefficient, double intercept, ArrayList<Double> yi, ArrayList<Double> xi){
+        ArrayList<Double> yM = new ArrayList<>();
+        ArrayList<Double> sumyM = new ArrayList<>();
+
+        for (int i = 0; i < yi.size(); i++) {
+            yM.add(intercept + angularCoefficient * - xi.get(i));
+        }
+
+        for (int i = 0; i < yi.size(); i++) {
+            sumyM.add(Math.pow(yi.get(i) - yM.get(i), 2));
+        }
+
+        double SQR = 0.0;
+
+        
+        for (int i = 0; i < sumyM.size(); i++) {
+            SQR += sumyM.get(i);
+        }
+
+        System.out.println(SQR);
+
+    }
 }
