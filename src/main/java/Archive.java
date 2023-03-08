@@ -14,7 +14,6 @@ public class Archive {
         while(true){
             if (line != null) {
                 if (line != "") {
-                    System.out.println(line);
                     content.add(line);
                 }
             } else {
