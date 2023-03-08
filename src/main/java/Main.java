@@ -1,3 +1,4 @@
+import java.io.DataOutput;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -27,6 +28,9 @@ public class Main {
 
             LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(xi, yi);
             leastSquaresMethod.calculate();
+
+            double AIC = leastSquaresMethod.calculateAIC();
+            System.out.println("AIC: " + AIC);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

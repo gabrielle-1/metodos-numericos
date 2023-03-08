@@ -14,6 +14,7 @@ public class LeastSquaresMethod {
     private ArrayList<Double> xy = new ArrayList<>();
     int length = 0;
     double x = 0.0, y = 0.0;
+    int params = 2;
     double sumxi = 0, sumyi = 0, sumx2 = 0, sumy2 = 0, sumxy = 0;
 
     public LeastSquaresMethod(ArrayList<Double> xi, ArrayList<Double> yi) {
@@ -41,9 +42,8 @@ public class LeastSquaresMethod {
 
             double angularCoefficient = calculateAngularCoefficient(length, sumxy, sumxi, sumyi, sumx2);
             double intercept = calculateIntercept(sumyi, angularCoefficient, sumxi, length);
-            calculateR(sumyi, angularCoefficient, intercept);
-            System.out.println(showFormula(angularCoefficient, intercept));
-            System.out.println();
+            double R = calculateR(sumyi, angularCoefficient, intercept);
+            showFormula(angularCoefficient, intercept, R);
         }
     }
 
@@ -63,16 +63,20 @@ public class LeastSquaresMethod {
         return result;
     }
 
-    private String showFormula (double angularCoefficient, double intercept){
+    private void showFormula (double angularCoefficient, double intercept, double R){
         String result = "";
+        DecimalFormat df = new DecimalFormat("#.##");
+
         if (intercept != NaN && intercept != NaN) {
-            DecimalFormat df = new DecimalFormat("#.##");
-            result = "y=" + df.format(intercept) + "+" + df.format(angularCoefficient) + "x";
+            System.out.println("y=" + df.format(intercept) + "+" + df.format(angularCoefficient) + "x");
         }
-        return result;
+
+        if (R != NaN && R != NaN) {
+            System.out.println("R² = " + df.format(R));
+        }
     }
 
-    private void calculateR (double sumyi, double angularCoefficient, double intercept){
+    private double calculateR (double sumyi, double angularCoefficient, double intercept){
         double result = 0;
         double yIdeal = sumyi / this.length;
         double sumYiLessYIdeal2 = 0.0;
@@ -91,7 +95,17 @@ public class LeastSquaresMethod {
         if (rSquared != NaN) {
             result += rSquared;
         }
-        DecimalFormat df = new DecimalFormat("#.##");
-        System.out.println("R² = " + df.format(result));
+        return result;
+    }
+
+    public double calculateAIC() {
+        double SQR = 0;
+
+        for (int i = 0; i < this.length; i++) {
+            SQR += Math.pow(this.yi.get(i), 2);
+        }
+        SQR /= this.length;
+
+        return this.length * Math.log(SQR) + 2 * this.params;
     }
 }
