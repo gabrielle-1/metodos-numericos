@@ -25,8 +25,8 @@ public class Main {
             System.out.println("Valores:");
             System.out.println(valuesString);
 
-            CoeficienteCorrelacaoLinear coeficienteCorrelacaoLinear = new CoeficienteCorrelacaoLinear(xi, yi);
-            coeficienteCorrelacaoLinear.calculate();
+            LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(xi, yi);
+            leastSquaresMethod.calculate();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,10 +1,9 @@
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static java.lang.Double.NaN;
 
-public class CoeficienteCorrelacaoLinear {
+public class LeastSquaresMethod {
 
     private ArrayList<Double> xi = new ArrayList<>();
     private ArrayList<Double> yi = new ArrayList<>();
@@ -17,7 +16,7 @@ public class CoeficienteCorrelacaoLinear {
     double x = 0.0, y = 0.0;
     double sumxi = 0, sumyi = 0, sumx2 = 0, sumy2 = 0, sumxy = 0;
 
-    public CoeficienteCorrelacaoLinear(ArrayList<Double> xi, ArrayList<Double> yi) {
+    public LeastSquaresMethod(ArrayList<Double> xi, ArrayList<Double> yi) {
         this.xi = xi;
         this.yi = yi;
         this.length = xi.size();
