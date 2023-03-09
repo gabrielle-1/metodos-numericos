@@ -12,7 +12,7 @@ public class Main {
         ArrayList<Double> yi = new ArrayList<>();
 
         try {
-            valuesString = archive.read("C:\\Users\\gabri\\OneDrive\\Documentos\\atividade-metodos-numericos\\src\\main\\resources\\file.txt");
+            valuesString = archive.read("C:\\Users\\aluno\\Desktop\\metodos-numericos\\src\\main\\resources\\file.txt");
             for (String valor : valuesString) {
                 String[] split = valor.split(" ");
 
