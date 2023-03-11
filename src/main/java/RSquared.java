@@ -5,20 +5,22 @@ import static java.lang.Double.NaN;
 public class RSquared {
 
     private double sumy, angularCoefficient, intercept, yIdeal, length, sumyIdeal, sumyIdealSquared, rSquared;
-    private ArrayList<Double> x = new ArrayList<>();
-    private ArrayList<Double> y = new ArrayList<>();
+    private ArrayList<Double> x;
+    private ArrayList<Double> y;
 
-    public RSquared(double sumy, double angularCoefficient, double intercept, ArrayList<Double> x, ArrayList<Double> y){
+    public RSquared(double sumy, double angularCoefficient, double intercept, ArrayList<Double> x, ArrayList<Double> y,
+                    double length){
+        this.length = length;
         this.sumy = sumy;
+        this.yIdeal = this.sumy / this.length;
         this.angularCoefficient = angularCoefficient;
         this.intercept = intercept;
-        this.yIdeal = sumy / this.length;
         this.x = x;
         this.y = y;
     }
 
     public double calculate(){
-        double result = 0.0;
+        double result = 0;
         boolean validateValues = this.validateValues();
         if (validateValues) {
             for (int i = 0; i < this.length; i++) {
@@ -35,6 +37,7 @@ public class RSquared {
         }
 
         return result;
+
     }
 
     private boolean validateValues(){

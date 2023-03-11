@@ -27,9 +27,9 @@ public class AIC {
     }
 
         public double calculateSQR() {
-            for (int i = 0; i < this.length; i++) {
+            for (int i = 0; i < this.length; i++)
                 this.SQR += Math.pow(this.y.get(i), 2);
-            }
+
             this.SQR /= this.length;
             return this.SQR;
         }

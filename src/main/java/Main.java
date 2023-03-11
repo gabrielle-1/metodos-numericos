@@ -12,7 +12,7 @@ public class Main {
         ArrayList<Double> yi = new ArrayList<>();
 
         try {
-            valuesString = archive.read("C:\\Users\\aluno\\Desktop\\metodos-numericos\\src\\main\\resources\\file.txt");
+            valuesString = archive.read("C:\\\\Users\\\\gabri\\\\OneDrive\\\\Documentos\\\\Programacao\\\\metodos-numericos\\\\src\\\\main\\\\resources\\\\file.txt");
             for (String valor : valuesString) {
                 String[] split = valor.split(" ");
 
@@ -23,14 +23,9 @@ public class Main {
                 yi.add(valory);
             }
 
-            System.out.println("Valores:");
-            System.out.println(valuesString);
-
             LeastSquaresMethod leastSquaresMethod = new LeastSquaresMethod(xi, yi);
             leastSquaresMethod.calculate();
 
-            double AIC = leastSquaresMethod.calculateAIC();
-            System.out.println("AIC: " + AIC);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

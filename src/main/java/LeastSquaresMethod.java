@@ -5,45 +5,57 @@ import static java.lang.Double.NaN;
 
 public class LeastSquaresMethod {
 
-    private ArrayList<Double> xi = new ArrayList<>();
-    private ArrayList<Double> yi = new ArrayList<>();
-    private ArrayList<Double> values;
-
-    private ArrayList<Double> x2 = new ArrayList<>();
-    private ArrayList<Double> y2 = new ArrayList<>();
+    private ArrayList<Double> x;
+    private ArrayList<Double> y;
+    private ArrayList<Double> xSquared = new ArrayList<>();
+    private ArrayList<Double> ySquared = new ArrayList<>();
     private ArrayList<Double> xy = new ArrayList<>();
     int length = 0;
-    double x = 0.0, y = 0.0;
     int params = 2;
-    double sumxi = 0, sumyi = 0, sumx2 = 0, sumy2 = 0, sumxy = 0;
+    double sumx = 0, sumy = 0, sumxSquared = 0, sumySquared = 0, sumxy = 0;
 
-    public LeastSquaresMethod(ArrayList<Double> xi, ArrayList<Double> yi) {
-        this.xi = xi;
-        this.yi = yi;
-        this.length = xi.size();
+    public LeastSquaresMethod(ArrayList<Double> x, ArrayList<Double> y) {
+        this.x = x;
+        this.y = y;
+        this.length = x.size();
     }
 
     public void calculate(){
         if (this.length > 0) {
 
             for (int i = 0; i < length; i++) {
-                x2.add(Math.pow(xi.get(i), 2));
-                y2.add(Math.pow(yi.get(i), 2));
-                xy.add(xi.get(i) * yi.get(i));
+                xSquared.add(Math.pow(x.get(i), 2));
+                ySquared.add(Math.pow(y.get(i), 2));
+                xy.add(x.get(i) * y.get(i));
             }
 
             for (int i = 0; i < length; i++) {
-                sumxi += xi.get(i);
-                sumyi += yi.get(i);
-                sumx2 += x2.get(i);
-                sumy2 += y2.get(i);
+                sumx += x.get(i);
+                sumy += y.get(i);
+                sumxSquared += xSquared.get(i);
+                sumySquared += ySquared.get(i);
                 sumxy += xy.get(i);
             }
 
-            double angularCoefficient = calculateAngularCoefficient(length, sumxy, sumxi, sumyi, sumx2);
-            double intercept = calculateIntercept(sumyi, angularCoefficient, sumxi, length);
-            double R = calculateR(sumyi, angularCoefficient, intercept);
-            showFormula(angularCoefficient, intercept, R);
+            AngularCoefficient angularCoefficient = new AngularCoefficient(this.length, this.sumxy, this.sumx,
+                    this.sumy, this.sumxSquared);
+
+            var valAngularCoefficient = angularCoefficient.calculate();
+
+            Intercept intercept = new Intercept(this.length, this.sumx, this.sumy, angularCoefficient.calculate());
+
+            var valIntercept = intercept.calculate();
+
+            RSquared rSquared = new RSquared(this.sumy, angularCoefficient.calculate(), intercept.calculate(),
+                    this.x, this.y, this.length);
+
+            var valRSquared = rSquared.calculate();
+
+            System.out.println(valRSquared);
+
+            System.out.println(calculateR(sumy, angularCoefficient.calculate(), intercept.calculate()));
+
+            showFormula(angularCoefficient.calculate(), intercept.calculate(), rSquared.calculate());
         }
     }
 
@@ -82,8 +94,8 @@ public class LeastSquaresMethod {
         double sumYiLessYIdeal2 = 0.0;
         double sumYiLessYIdeal = 0.0;
         for (int i = 0; i < this.length; i++) {
-            double x = this.xi.get(i);
-            double y = this.yi.get(i);
+            double x = this.x.get(i);
+            double y = this.y.get(i);
             double yiLessYIdeal = intercept + angularCoefficient * x;
             sumYiLessYIdeal2 += Math.pow((y - yIdeal),2);
             sumYiLessYIdeal += (y - yiLessYIdeal) * (y - yiLessYIdeal);
@@ -102,7 +114,7 @@ public class LeastSquaresMethod {
         double SQR = 0;
 
         for (int i = 0; i < this.length; i++) {
-            SQR += Math.pow(this.yi.get(i), 2);
+            SQR += Math.pow(this.y.get(i), 2);
         }
         SQR /= this.length;
 
